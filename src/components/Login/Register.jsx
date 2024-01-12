@@ -66,6 +66,11 @@ const Register = () => {
     }
   };
 
+  const handleCancel = () => {
+    // Navigate to the login page
+    navigate("/login");
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-4 rounded-md shadow-md max-w-md w-full">
@@ -93,12 +98,21 @@ const Register = () => {
               />
             </div>
           ))}
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-700"
-          >
-            Register
-          </button>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-700"
+            >
+              Register
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-gray-400 text-white px-3 py-2 rounded-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -5,6 +5,8 @@ import Nav from "./components/Navbar";
 import Login from "./components/Login/Login";
 import Sale from "./components/SalePage/Sale";
 import Register from "./components/Login/Register"; // Import the Register component
+import Cart from "./components/Cart/Cart";
+import Order from "./components/Order/order";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -60,9 +62,14 @@ function App() {
             loggedIn ? <Sale username={username} /> : <Navigate to="/login" />
           }
         ></Route>
+
         {/* Add other routes as needed */}
         <Route path="/" element={<Sale />} />
         <Route path="/register" element={<Register />} />
+
+        <Route path="/cart" element={<Cart username={username} />} />
+        <Route path="/order" element={<Order username={username} />} />
+
         {/* <Route path="/loginP" element={<Login />} /> */}
       </Routes>
       <Footer />
