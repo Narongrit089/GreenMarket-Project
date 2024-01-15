@@ -1,83 +1,94 @@
-
 <?php
+header("Content-Type: application/json");
 
-header('Content-Type: application/json');
-include './conn.php';
+include '../conn.php';
 
-// ส่งข้อมูลทั้งหมด
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = $conn->query("SELECT * FROM members");
-    $members = array();
-    while ($row = $result->fetch_assoc()) {
-        $members[] = $row;
-    }
-    echo json_encode($members);
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// เพิ่มข้อมูลใหม่
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents("php://input"), true);
+// Handle CRUD operations based on HTTP method
+$method = $_SERVER["REQUEST_METHOD"];
 
-    $firstName = isset($_REQUEST['FirstName']) ? $_REQUEST['FirstName'] : '';
-    $lastName = isset($_REQUEST['LastName']) ? $_REQUEST['LastName'] : '';
-    $address = isset($_REQUEST['Address']) ? $_REQUEST['Address'] : '';
-    $phoneNumber = isset($_REQUEST['PhoneNumber']) ? $_REQUEST['PhoneNumber'] : '';
-    $email = isset($_REQUEST['Email']) ? $_REQUEST['Email'] : '';
-    $password = isset($_REQUEST['Password']) ? $_REQUEST['Password'] : '';
+switch ($method) {
+    case "GET":
+        // Fetch all members
+        $sql = "SELECT * FROM members";
+        $result = $conn->query($sql);
 
-    $sql = "INSERT INTO `members` (`FirstName`, `LastName`, `Address`, `PhoneNumber`, `Email`, `Password`)
-        VALUES ('$firstName', '$lastName', '$address', '$phoneNumber', '$email', '$password')";
+        if ($result->num_rows > 0) {
+            $members = [];
+            while ($row = $result->fetch_assoc()) {
+                $members[] = $row;
+            }
+            echo json_encode($members);
+        } else {
+            echo json_encode([]);
+        }
+        break;
 
-    if (mysqli_query($conn, $sql)) {
-        // ส่งรหัสสถานะ 200 (OK)
-        http_response_code(200);
-        echo json_encode(['status' => 'success', 'message' => 'Member added successfully.']);
-    } else {
-        // ส่งรหัสสถานะ 500 (Internal Server Error) หากมีข้อผิดพลาดในการเพิ่มข้อมูล
-        http_response_code(500);
-        echo json_encode(['status' => 'error', 'message' => 'Error: ' . $sql . '<br>' . mysqli_error($conn)]);
-    }
+    case "POST":
 
+        $maxMemberIDQuery = "SELECT MAX(MemberID) AS maxMemberID FROM members";
+        $maxMemberIDResult = mysqli_query($conn, $maxMemberIDQuery);
+        $maxMemberIDData = mysqli_fetch_assoc($maxMemberIDResult);
+        $newMemberID = $maxMemberIDData['maxMemberID'] + 1;
+        // Create a new member
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $firstName = $data["firstName"];
+        $lastName = $data["lastName"];
+        $address = $data["address"];
+        $phoneNumber = $data["phoneNumber"];
+        $email = $data["email"];
+        $password = $data["password"];
+
+        $sql = "INSERT INTO members (MemberID, FirstName, LastName, Address, PhoneNumber, Email, Password) VALUES ('$newMemberID','$firstName', '$lastName', '$address', '$phoneNumber', '$email', '$password')";
+
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Member added successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
+
+    case "PUT":
+        // Update an existing member
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $id = $data["id"];
+        $name = $data["name"];
+        $email = $data["email"];
+
+        $sql = "UPDATE members SET name='$name', email='$email' WHERE id=$id";
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Member updated successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
+
+    case "DELETE":
+        // Delete an existing member
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $id = $data["id"];
+
+        $sql = "DELETE FROM members WHERE MemberID=$id";
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Member deleted successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
+
+    default:
+        echo json_encode(["error" => "Invalid HTTP method"]);
 }
 
-// อัปเดตข้อมูล
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $memberid = $data['MemberID'];
-    $firstname = $data['FirstName'];
-    $lastname = $data['LastName'];
-    $address = $data['Address'];
-    $phonenumber = $data['PhoneNumber'];
-    $email = $data['Email'];
-    $password = $data['Password'];
-
-    $sql = "UPDATE members
-            SET FirstName='$firstname', LastName='$lastname', Address='$address',
-            PhoneNumber='$phonenumber', Email='$email', Password='$password'
-            WHERE MemberID='$memberid'";
-
-    if ($conn->query($sql) === true) {
-        echo json_encode(array("message" => "Member updated successfully"));
-    } else {
-        echo json_encode(array("error" => "Error updating record: " . $conn->error));
-    }
-}
-
-// ลบข้อมูล
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $memberid = $data['MemberID'];
-
-    $sql = "DELETE FROM members WHERE MemberID='$memberid'";
-
-    if ($conn->query($sql) === true) {
-        echo json_encode(array("message" => "Member deleted successfully"));
-    } else {
-        echo json_encode(array("error" => "Error deleting record: " . $conn->error));
-    }
-}
-
-// ปิดการเชื่อมต่อ
 $conn->close();
-
-?>

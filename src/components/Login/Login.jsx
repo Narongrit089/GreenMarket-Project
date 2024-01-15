@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import vegetablesImage from "/public/images/vegetables3.png";
 
 const Login = ({ onLogin, loginError }) => {
   const [formData, setFormData] = useState({
@@ -36,16 +37,25 @@ const Login = ({ onLogin, loginError }) => {
       const data = await response.json();
 
       if (response.ok) {
-        const { FirstName, LastName } = data; // Assuming the server returns these fields
+        const { FirstName, LastName, Email, Password } = data;
 
         // Assuming successful login, set the user
         onLogin(formData.email);
 
+        // Save user data in localStorage for later reference
+        localStorage.setItem("email", Email);
+        localStorage.setItem("password", Password);
+
         // Display a welcome notification with FirstName and LastName
         toast.success(`Welcome, ${FirstName} ${LastName}!`);
 
-        // Redirect to the dashboard
-        navigate("/sale");
+        // Check if the user is admin before navigating to the dashboard
+        if (Email === "1@admin.com" && Password === "123") {
+          navigate("/member");
+        } else {
+          // Redirect to the dashboard
+          navigate("/sale");
+        }
       } else {
         // Handle login error
         toast.error("Please check your password.");
@@ -62,8 +72,16 @@ const Login = ({ onLogin, loginError }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md w-96">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Login</h2>
+      <div className="bg-white p-8 rounded-md shadow-md max-w-md w-full">
+        <img
+          src={vegetablesImage}
+          alt="Vegetables"
+          className="mx-auto mb-4"
+          style={{ width: "100px", height: "100px" }} // Circular image
+        />
+        <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+          Login
+        </h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-semibold mb-2">
@@ -94,7 +112,7 @@ const Login = ({ onLogin, loginError }) => {
           <div className="flex justify-between items-center mb-4">
             <button
               type="submit"
-              className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-700"
+              className="bg-green-600 text-white px-4 py-2 rounded-md  hover:bg-green-700 focus:outline-none focus:bg-green-700"
             >
               Login
             </button>

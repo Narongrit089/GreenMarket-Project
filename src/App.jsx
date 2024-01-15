@@ -8,6 +8,8 @@ import Register from "./components/Login/Register"; // Import the Register compo
 import Cart from "./components/Cart/Cart";
 import Order from "./components/Order/order";
 
+import Member from "./components/Admin/memberAM";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -43,6 +45,7 @@ function App() {
     <BrowserRouter>
       <ToastContainer />
       <Nav loggedIn={loggedIn} username={username} onLogout={handleLogout} />
+
       <Routes>
         {/* Use a route for the login page */}
         <Route
@@ -69,6 +72,7 @@ function App() {
 
         <Route path="/cart" element={<Cart username={username} />} />
         <Route path="/order" element={<Order username={username} />} />
+        <Route path="/member" element={<Member username={username} />} />
 
         {/* <Route path="/loginP" element={<Login />} /> */}
       </Routes>

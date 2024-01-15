@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import vegetablesImage from "/public/images/vegetables3.png";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +75,15 @@ const Register = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-4 rounded-md shadow-md max-w-md w-full">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Register</h2>
+        <img
+          src={vegetablesImage}
+          alt="Vegetables"
+          className="mx-auto mb-4"
+          style={{ width: "80px", height: "80px" }} // Circular image
+        />
+        <h2 className="text-xl font-bold mb-4 text-gray-800 text-center">
+          Register
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-2">
           {[
             "FirstName",

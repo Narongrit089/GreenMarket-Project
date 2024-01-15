@@ -1,74 +1,100 @@
 <?php
+header("Content-Type: application/json");
 
-include 'conn.php';
+include '../conn.php';
 
-header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// ดำเนินการ CRUD ของ products ต่อไปนี้
-
-// 1. ดึงข้อมูลทั้งหมดจากตาราง products
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = $conn->query("SELECT * FROM products");
-    $products = array();
-    while ($row = $result->fetch_assoc()) {
-        $products[] = $row;
-    }
-    echo json_encode($products);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// 2. เพิ่มข้อมูลใหม่
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $productname = $data['ProductName'];
-    $price = $data['Price'];
-    $imageurl = $data['ImageURL'];
-    $category = $data['Category'];
-    $additionalinfo = $data['AdditionalInfo'];
+// Handle CRUD operations based on HTTP method
+$method = $_SERVER["REQUEST_METHOD"];
 
-    $sql = "INSERT INTO products (ProductName, Price, ImageURL, Category, AdditionalInfo)
-            VALUES ('$productname', $price, '$imageurl', '$category', '$additionalinfo')";
+switch ($method) {
+    case "GET":
+        // Fetch all products
+        $sql = "SELECT * FROM products";
+        $result = $conn->query($sql);
 
-    if ($conn->query($sql) === true) {
-        echo json_encode(array("message" => "Product added successfully"));
-    } else {
-        echo json_encode(array("error" => "Error: " . $sql . "<br>" . $conn->error));
-    }
-}
+        if ($result->num_rows > 0) {
+            $products = [];
+            while ($row = $result->fetch_assoc()) {
+                $products[] = $row;
+            }
+            echo json_encode($products);
+        } else {
+            echo json_encode([]);
+        }
+        break;
 
-// 3. อัปเดตข้อมูล
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $productid = $data['ProductID'];
-    $productname = $data['ProductName'];
-    $price = $data['Price'];
-    $imageurl = $data['ImageURL'];
-    $category = $data['Category'];
-    $additionalinfo = $data['AdditionalInfo'];
+    case "POST":
+        // Get the maximum ProductID
+        $maxProductIDQuery = "SELECT MAX(ProductID) AS maxProductID FROM products";
+        $maxProductIDResult = mysqli_query($conn, $maxProductIDQuery);
+        $maxProductIDData = mysqli_fetch_assoc($maxProductIDResult);
+        $newProductID = $maxProductIDData['maxProductID'] + 1;
 
-    $sql = "UPDATE products
-            SET ProductName='$productname', Price=$price, ImageURL='$imageurl',
-            Category='$category', AdditionalInfo='$additionalinfo'
-            WHERE ProductID=$productid";
+        // Create a new product
+        $data = json_decode(file_get_contents("php://input"), true);
 
-    if ($conn->query($sql) === true) {
-        echo json_encode(array("message" => "Product updated successfully"));
-    } else {
-        echo json_encode(array("error" => "Error updating record: " . $conn->error));
-    }
-}
+        $productName = $data["productName"];
+        $price = $data["price"];
+        $imageURL = $data["imageURL"];
+        $category = $data["category"];
+        $additionalInfo = $data["additionalInfo"];
+        $quantity = $data["quantity"];
 
-// 4. ลบข้อมูล
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    $productid = $data['ProductID'];
+        // Insert the new product into the database
+        $sql = "INSERT INTO products (ProductID, ProductName, Price, ImageURL, Category, AdditionalInfo, Quantity) VALUES ('$newProductID', '$productName', $price, '$imageURL', '$category', '$additionalInfo', $quantity)";
 
-    $sql = "DELETE FROM products WHERE ProductID=$productid";
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Product added successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
 
-    if ($conn->query($sql) === true) {
-        echo json_encode(array("message" => "Product deleted successfully"));
-    } else {
-        echo json_encode(array("error" => "Error deleting record: " . $conn->error));
-    }
+    case "PUT":
+        // Update an existing product
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $productID = $data["ProductID"];
+        $productName = $data["ProductName"];
+        $price = $data["Price"];
+        $imageURL = $data["ImageURL"];
+        $category = $data["Category"];
+        $additionalInfo = $data["AdditionalInfo"];
+        $quantity = $data["Quantity"];
+
+        $sql = "UPDATE products SET ProductName='$productName', Price=$price, ImageURL='$imageURL', Category='$category', AdditionalInfo='$additionalInfo', Quantity=$quantity WHERE ProductID=$productID";
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Product updated successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
+
+    case "DELETE":
+        // Delete an existing product
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $productID = $data["ProductID"];
+
+        $sql = "DELETE FROM products WHERE ProductID=$productID";
+        if ($conn->query($sql) === true) {
+            echo json_encode(["message" => "Product deleted successfully"]);
+        } else {
+            echo json_encode(["error" => "Error: " . $sql . "<br>" . $conn->error]);
+        }
+        break;
+
+    default:
+        echo json_encode(["error" => "Invalid HTTP method"]);
 }
 
 $conn->close();

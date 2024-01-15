@@ -23,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "MemberID" => $row["MemberID"],
                 "FirstName" => $row["FirstName"],
                 "LastName" => $row["LastName"],
+                "Email" => $row["Email"],
+                "Password" => $row["Password"],
                 // Add other necessary fields
             );
 
