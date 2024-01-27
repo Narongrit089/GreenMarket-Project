@@ -153,21 +153,21 @@ const Sale = ({ username }) => {
       <div className="mb-4">
         <button
           className={`mr-2 px-4 py-2 border rounded focus:outline-none focus:shadow-outline ${
-            currentCategory === "ผัก"
+            currentCategory === "Vegetable"
               ? "bg-green-500 text-white"
               : "bg-white text-gray-700 hover:bg-gray-100"
           }`}
-          onClick={() => setCurrentCategory("ผัก")}
+          onClick={() => setCurrentCategory("Vegetable")}
         >
           Vegetables
         </button>
         <button
           className={`px-4 py-2 border rounded focus:outline-none focus:shadow-outline ${
-            currentCategory === "ผลไม้"
+            currentCategory === "Fruit"
               ? "bg-green-500 text-white"
               : "bg-white text-gray-700 hover:bg-gray-100"
           }`}
-          onClick={() => setCurrentCategory("ผลไม้")}
+          onClick={() => setCurrentCategory("Fruit")}
         >
           Fruits
         </button>
@@ -187,8 +187,8 @@ const Sale = ({ username }) => {
             />
             <div className="p-4">
               <h2 className="text-xl font-bold mb-2">{product.ProductName}</h2>
-              <p className="text-gray-700 mb-2">ราคา: {product.Price}฿/1Kg.</p>
-              <p className="text-gray-700">ประเภท: {product.Category}</p>
+              <p className="text-gray-700 mb-2">Price: {product.Price}฿/1Kg.</p>
+              <p className="text-gray-700">Type: {product.Category}</p>
             </div>
           </div>
         ))}
@@ -231,16 +231,16 @@ const Sale = ({ username }) => {
               className="w-full h-40 object-cover mb-4"
             />
             <p className="text-gray-700 mb-2">
-              ราคา: {selectedProduct.Price}฿/1Kg.
+              price: {selectedProduct.Price}฿/1Kg.
             </p>
             <p className="text-gray-700 mb-2">
-              ประเภท: {selectedProduct.Category}
+              type: {selectedProduct.Category}
             </p>
             <p className="text-gray-700 mb-2">
-              รายละเอียด: {selectedProduct.AdditionalInfo}
+              detail: {selectedProduct.AdditionalInfo}
             </p>
             <p className="text-gray-700 mb-2">
-              เหลือ: {selectedProduct.Quantity}
+              remaining: {selectedProduct.Quantity}
             </p>
             <div className="flex items-center mb-4">
               <button
