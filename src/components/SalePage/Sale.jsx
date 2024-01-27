@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
+import CommentModal from "./CommentModal"; // Import CommentModal component
 
 const Sale = ({ username }) => {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ const Sale = ({ username }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [currentCategory, setCurrentCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showCommentModal, setShowCommentModal] = useState(false); // State for showing the comment modal
+  const [commentProduct, setCommentProduct] = useState(null); // State for storing the product to comment on
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,6 +133,24 @@ const Sale = ({ username }) => {
     product.ProductName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Function to handle clicking on "Add&View Comment"
+  const handleComment = (product) => {
+    setCommentProduct(product); // Set the product to comment on
+    refreshProductData();
+    setShowCommentModal(true); // Show the comment modal
+  };
+
+  const refreshProductData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/GreenMarket/show_products.php"
+      );
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl font-bold mb-6">Product List</h1>
@@ -189,6 +211,13 @@ const Sale = ({ username }) => {
               <h2 className="text-xl font-bold mb-2">{product.ProductName}</h2>
               <p className="text-gray-700 mb-2">Price: {product.Price}฿/1Kg.</p>
               <p className="text-gray-700">Type: {product.Category}</p>
+              <ReactStars
+                count={5}
+                value={product.score} // กำหนดค่า score ของสินค้าที่มีอยู่ (อาจเป็นค่าที่ได้จากฐานข้อมูลหรือตัวแปรอื่นๆ)
+                size={24}
+                activeColor="#ffd700"
+                edit={false} // กำหนดให้ไม่สามารถแก้ไข score ได้
+              />
             </div>
           </div>
         ))}
@@ -230,6 +259,13 @@ const Sale = ({ username }) => {
               alt={selectedProduct.ProductName}
               className="w-full h-40 object-cover mb-4"
             />
+            <ReactStars
+              count={5}
+              value={parseInt(selectedProduct.score)}
+              size={24}
+              activeColor="#ffd700"
+              edit={false}
+            />
             <p className="text-gray-700 mb-2">
               price: {selectedProduct.Price}฿/1Kg.
             </p>
@@ -242,6 +278,7 @@ const Sale = ({ username }) => {
             <p className="text-gray-700 mb-2">
               remaining: {selectedProduct.Quantity}
             </p>
+
             <div className="flex items-center mb-4">
               <button
                 className="px-3 py-1 border rounded-l focus:outline-none"
@@ -266,8 +303,23 @@ const Sale = ({ username }) => {
             >
               Add to Cart
             </button>
+            <button
+              className="ml-5 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+              onClick={() =>
+                handleComment(selectedProduct, selectedProduct.comment)
+              } // ส่ง selectedProduct.comment มาผ่าน prop
+            >
+              Add&View Comment
+            </button>
           </div>
         </div>
+      )}
+      {showCommentModal && commentProduct && (
+        <CommentModal
+          product={commentProduct}
+          closeModal={() => setShowCommentModal(false)} // Function to close the modal
+          username={username} // Pass the username prop to CommentModal
+        />
       )}
     </div>
   );

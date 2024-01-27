@@ -1,52 +1,42 @@
 <?php
+// Include database connection
 include 'conn.php';
 
-// Inside get_orderdetails.php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+// Set header for JSON response
+header("Content-Type: application/json");
 
-header('Content-Type: application/json');
-
-// Validate and sanitize user input
-$username = isset($_GET['username']) ? $conn->real_escape_string($_GET['username']) : '';
-
-// Check if username is provided
-if (empty($username)) {
+// Check if productID is provided in the request
+if (!isset($_GET['productID'])) {
     http_response_code(400);
-    echo json_encode(array("error" => "Username is required"));
+    echo json_encode(array("error" => "ProductID is required"));
     exit();
 }
 
-// Fetch orderdetails data
-$query = "call showOrder('$username');";
+// Sanitize and validate productID
+$productID = $conn->real_escape_string($_GET['productID']);
 
-/* call => "SELECT `order`.`orderNo`,os.odStatusName,`order`.`Netprice`,mb.FirstName,mb.LastName,mb.Address,mb.PhoneNumber
-FROM `order`
-JOIN orderstatus os USING (odStatusID)
-JOIN members mb USING (Email)
-WHERE `order`.`Email` = '$username';" */
+// Query to fetch comments for the specified productID
+$query = "SELECT comment FROM comments WHERE productID = '$productID'";
 
+// Perform the query
 $result = $conn->query($query);
 
-// Inside get_orderdetails.php
+// Check if the query was successful
 if ($result) {
-    $orderDetails = array();
+    $comments = array();
 
-    // Fetch results
+    // Fetch comments
     while ($row = $result->fetch_assoc()) {
-        $orderDetails[] = $row;
+        $comments[] = $row['comment'];
     }
 
-    // Log the fetched data
-    error_log(json_encode($orderDetails));
-
-    // Send JSON response
-    echo json_encode($orderDetails);
+    // Send JSON response with comments
+    echo json_encode($comments);
 } else {
-    // Send error response
+    // Send error response if the query fails
     http_response_code(500);
-    echo json_encode(array("error" => "Error fetching orderdetails"));
+    echo json_encode(array("error" => "Error fetching comments"));
 }
 
+// Close database connection
 $conn->close();
