@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -9,6 +8,7 @@ import {
   FaSignOutAlt,
   FaListAlt,
 } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
 
 const Navbar = ({ loggedIn, onLogout, username }) => {
   const location = useLocation();
@@ -16,9 +16,11 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
   const isCartPage = location.pathname === "/cart";
   const isOrderPage = location.pathname === "/order";
   const isAdminPage = location.pathname === "/member";
+  const isLocationPage = location.pathname === "/location"; // เพิ่มตรวจสอบว่าอยู่ในหน้า Location
 
   const handleLogout = () => {
-    if (isCartPage || isOrderPage || isAdminPage) {
+    if (isCartPage || isOrderPage || isAdminPage || isLocationPage) {
+      // เพิ่มการตรวจสอบว่าอยู่ในหน้า Location
       window.location.href = "/login";
     } else {
       onLogout();
@@ -46,6 +48,16 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
             >
               <FaHome className="mr-2" />
               Home
+            </Link>
+          )}
+
+          {!isAdminPage && (
+            <Link
+              to="/location" // ปรับเส้นทางให้เป็น /location เมื่อเข้าสู่ระบบ
+              className="flex items-center text-white font-serif hover:text-yellow-300 transition duration-300"
+            >
+              <FaLocationDot className="mr-2" />
+              Location
             </Link>
           )}
 

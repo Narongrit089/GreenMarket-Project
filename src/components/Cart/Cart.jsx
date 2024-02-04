@@ -150,6 +150,20 @@ const Cart = ({ username }) => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    const deleteZeroQuantityProductsResponse = await fetch(
+      "http://localhost:8080/GreenMarket/delete_zero_quantity_products.php",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!deleteZeroQuantityProductsResponse.ok) {
+      toast.error("Failed to delete zero quantity products");
+      throw new Error("Error deleting zero quantity products");
+    }
   };
 
   return (

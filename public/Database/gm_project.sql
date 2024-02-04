@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2024 at 08:20 PM
+-- Generation Time: Feb 04, 2024 at 09:00 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -43,8 +43,8 @@ INSERT INTO `carts` (`odDID`, `odStatusID`, `ProductID`, `qty`, `Email`) VALUES
 (215, 103, 19, 3, 'alice@email.com'),
 (216, 103, 18, 2, 'alice@email.com'),
 (217, 103, 15, 3, 'alice@email.com'),
-(244, 103, 0, 0, ''),
-(271, 103, 17, 1, 'david@email.com');
+(271, 103, 17, 1, 'david@email.com'),
+(301, 103, 33, 3, 'Hala@email.com');
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,37 @@ INSERT INTO `comments` (`comment_id`, `comment`, `ProductID`, `vote`, `Email`) V
 (104, '555', 5, 1.00, 'bob@email.com'),
 (105, 'ลูกค้าประจำเลยฮะ', 4, 5.00, 'bob@email.com'),
 (106, 'กินแล้วฟันเหลืองเหมือนข้าวโพดเลย', 25, 1.00, 'bob@email.com'),
-(107, 'หวานดีนะ', 25, 3.00, 'Hala@email.com');
+(107, 'หวานดีนะ', 25, 3.00, 'Hala@email.com'),
+(108, 'ส้มเขียวทำไมส้ม แต่ก็อร่อยนะ', 33, 5.00, 'Hala@email.com'),
+(109, 'เต็ม 10 ไม่หัก', 33, 5.00, 'ff@email.com'),
+(110, 'อร่อย', 4, 5.00, 'ff@email.com'),
+(111, 'ฉ่ำๆ', 33, 5.00, 'bob@email.com'),
+(112, 'อร่อยกว่าสีแดงง', 17, 4.00, 'bob@email.com'),
+(113, 'ไม่อร่อย', 2, 1.00, 'bob@email.com'),
+(114, 'แซ่บดี', 2, 5.00, 'Hala@email.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location`
+--
+
+CREATE TABLE `location` (
+  `codeLo` varchar(5) NOT NULL,
+  `nameLo` varchar(100) NOT NULL,
+  `details` varchar(255) NOT NULL,
+  `latitude` decimal(10,7) NOT NULL,
+  `longitude` decimal(10,7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`codeLo`, `nameLo`, `details`, `latitude`, `longitude`) VALUES
+('1011', 'GreenMarket', 'สาขาที่1 ณ คณะเทคโนโลยีดิจิทัล มหาวิทยาลัยราชภัฏเชียงราย', 19.9855695, 99.8435655),
+('1102', 'GreenMarket', 'สาขาที่2 ณ บ้านดู่เมืองใหม่', 19.9738654, 99.8621986),
+('1103', 'GreenMarket', 'สาขาที่3 ณ หน้ามอแม่ฟ้าหลวง', 20.0469511, 99.8748551);
 
 -- --------------------------------------------------------
 
@@ -260,7 +290,7 @@ INSERT INTO `products` (`ProductID`, `ProductName`, `Price`, `ImageURL`, `Catego
 (30, 'Radish', 32.00, 'https://img.kapook.com/u/2018/sireeporn/1_39.jpg', 'Vegetable', 'Rich flavor', 49, 0),
 (31, 'Longan', 90.00, 'https://image.makewebeasy.net/makeweb/m_1920x0/oFvGx8Urz/ThaiFruit/222.jpg', 'Fruit', 'Sweet and crispy', 35, 0),
 (32, 'Mimosa', 28.00, 'https://s359.kapook.com/pagebuilder/3f590d6d-b62f-4444-a454-b0482a1ad8fd.jpg', 'Vegetable', 'Fresh and crisp', 60, 0),
-(33, 'Orange', 45.00, 'https://assets.brandinside.asia/uploads/2023/05/Orange-scaled.jpeg', 'Fruit', 'sweet and sour', 80, 0),
+(33, 'Orange', 45.00, 'https://assets.brandinside.asia/uploads/2023/05/Orange-scaled.jpeg', 'Fruit', 'sweet and sour', 80, 5),
 (34, 'Zucchini', 38.00, 'https://www.calforlife.com/image/food/Angled-gourd.gif', 'Vegetable', 'Soft and fragrant', 70, 0),
 (35, 'Asparagus', 120.00, 'https://mthai.com/app/uploads/2019/07/asparagus.jpg', 'Vegetable', 'A little sweet and intense.', 40, 0),
 (36, 'Coriander', 20.00, 'https://www.disthai.com/images/content/original-1634632690275.jpg', 'Vegetable', 'Fragrant and refreshing', 90, 0),
@@ -313,6 +343,12 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`comment_id`);
 
 --
+-- Indexes for table `location`
+--
+ALTER TABLE `location`
+  ADD PRIMARY KEY (`codeLo`);
+
+--
 -- Indexes for table `members`
 --
 ALTER TABLE `members`
@@ -350,13 +386,13 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `odDID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
+  MODIFY `odDID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `order`

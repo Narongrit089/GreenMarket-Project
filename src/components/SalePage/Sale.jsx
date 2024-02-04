@@ -196,50 +196,70 @@ const Sale = ({ username }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        {currentProducts.map((product) => (
-          <div
-            key={product.ProductID}
-            className="bg-white overflow-hidden shadow-lg rounded-lg mb-4 transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
-            onClick={() => handleProductClick(product)}
-          >
-            <img
-              src={product.ImageURL}
-              alt={product.ProductName}
-              className="w-full h-40 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-bold mb-2">{product.ProductName}</h2>
-              <p className="text-gray-700 mb-2">Price: {product.Price}฿/1Kg.</p>
-              <p className="text-gray-700">Type: {product.Category}</p>
-              <ReactStars
-                count={5}
-                value={product.score} // กำหนดค่า score ของสินค้าที่มีอยู่ (อาจเป็นค่าที่ได้จากฐานข้อมูลหรือตัวแปรอื่นๆ)
-                size={24}
-                activeColor="#ffd700"
-                edit={false} // กำหนดให้ไม่สามารถแก้ไข score ได้
-              />
-            </div>
+        {filteredProducts.length === 0 ? ( // ตรวจสอบว่าไม่พบสินค้าที่ตรงกับคำค้นหา
+          <div className="bg-gradient-to-r from-pink-400 to-purple-500 p-8 rounded-lg shadow-lg text-white">
+            <p className="text-center text-3xl font-bold mb-4">
+              No products found.
+            </p>
+            <p className="text-center text-lg">
+              Sorry, we couldn't find any products matching your search.
+            </p>
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center mt-8 mb-5">
-        {Array.from(
-          { length: Math.ceil(products.length / productsPerPage) },
-          (_, i) => (
-            <button
-              key={i + 1}
-              className={`mx-2 px-4 py-2 border rounded focus:outline-none focus:shadow-outline ${
-                currentPage === i + 1
-                  ? `bg-gradient-to-r from-blue-500 to-green-500 text-white`
-                  : "bg-white text-gray-700 hover:bg-gray-100"
-              }`}
-              onClick={() => paginate(i + 1)}
+        ) : (
+          // ถ้าพบสินค้าที่ตรงกับคำค้นหา
+          currentProducts.map((product) => (
+            <div
+              key={product.ProductID}
+              className="bg-white overflow-hidden shadow-lg rounded-lg mb-4 transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
+              onClick={() => handleProductClick(product)}
             >
-              {i + 1}
-            </button>
-          )
+              <img
+                src={product.ImageURL}
+                alt={product.ProductName}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-bold mb-2">
+                  {product.ProductName}
+                </h2>
+                <p className="text-gray-700 mb-2">
+                  Price: {product.Price}฿/1Kg.
+                </p>
+                <p className="text-gray-700">Type: {product.Category}</p>
+                <ReactStars
+                  count={5}
+                  value={product.score} // กำหนดค่า score ของสินค้าที่มีอยู่ (อาจเป็นค่าที่ได้จากฐานข้อมูลหรือตัวแปรอื่นๆ)
+                  size={24}
+                  activeColor="#ffd700"
+                  edit={false} // กำหนดให้ไม่สามารถแก้ไข score ได้
+                />
+              </div>
+            </div>
+          ))
         )}
       </div>
+
+      {filteredProducts.length > 0 && (
+        <div className="flex justify-center mt-8 mb-5">
+          {Array.from(
+            { length: Math.ceil(filteredProducts.length / productsPerPage) },
+            (_, i) => (
+              <button
+                key={i + 1}
+                className={`mx-2 px-4 py-2 border rounded focus:outline-none focus:shadow-outline ${
+                  currentPage === i + 1
+                    ? `bg-gradient-to-r from-blue-500 to-green-500 text-white`
+                    : "bg-white text-gray-700 hover:bg-gray-100"
+                }`}
+                onClick={() => paginate(i + 1)}
+              >
+                {i + 1}
+              </button>
+            )
+          )}
+        </div>
+      )}
+
       {selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 max-w-md w-full rounded-lg overflow-y-auto">
