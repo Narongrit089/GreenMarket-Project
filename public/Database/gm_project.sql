@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2024 at 09:00 AM
+-- Generation Time: Feb 04, 2024 at 04:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -42,9 +42,21 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`odDID`, `odStatusID`, `ProductID`, `qty`, `Email`) VALUES
 (215, 103, 19, 3, 'alice@email.com'),
 (216, 103, 18, 2, 'alice@email.com'),
-(217, 103, 15, 3, 'alice@email.com'),
-(271, 103, 17, 1, 'david@email.com'),
-(301, 103, 33, 3, 'Hala@email.com');
+(352, 103, 0, 0, ''),
+(353, 103, 0, 0, ''),
+(354, 103, 0, 0, ''),
+(355, 103, 0, 0, ''),
+(356, 103, 0, 0, ''),
+(357, 103, 0, 0, ''),
+(358, 103, 0, 0, ''),
+(359, 103, 0, 0, ''),
+(360, 103, 0, 0, ''),
+(361, 103, 0, 0, ''),
+(368, 103, 17, 2, 'Hala@email.com'),
+(369, 103, 6, 2, 'david@email.com'),
+(381, 103, 1, 3, 'ff@email.com'),
+(382, 103, 6, 3, 'ff@email.com'),
+(383, 103, 15, 1, 'ff@email.com');
 
 -- --------------------------------------------------------
 
@@ -117,7 +129,8 @@ INSERT INTO `comments` (`comment_id`, `comment`, `ProductID`, `vote`, `Email`) V
 (111, 'ฉ่ำๆ', 33, 5.00, 'bob@email.com'),
 (112, 'อร่อยกว่าสีแดงง', 17, 4.00, 'bob@email.com'),
 (113, 'ไม่อร่อย', 2, 1.00, 'bob@email.com'),
-(114, 'แซ่บดี', 2, 5.00, 'Hala@email.com');
+(114, 'แซ่บดี', 2, 5.00, 'Hala@email.com'),
+(115, 'ลูกใหญ่ดีครับ', 4, 5.00, 'david@email.com');
 
 -- --------------------------------------------------------
 
@@ -155,21 +168,23 @@ CREATE TABLE `members` (
   `Address` varchar(255) DEFAULT NULL,
   `PhoneNumber` varchar(10) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
-  `Password` varchar(100) DEFAULT NULL
+  `Password` varchar(100) DEFAULT NULL,
+  `access_rights` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`MemberID`, `FirstName`, `LastName`, `Address`, `PhoneNumber`, `Email`, `Password`) VALUES
-(0, 'Admin', 'L1', NULL, NULL, '1@admin.com', '123'),
-(1, 'อลิซ', 'จอห์นสัน', '789 ถนนมาร์เก็ต', '555-9876', 'alice@email.com', 'securepass123'),
-(2, 'บ็อบ', 'สมิธ', '123 ถนนการ์เด้น', '555-4321', 'bob@email.com', 'pass123'),
-(3, 'Apinya', 'Noochuay', '987 LA JDL', '999999', 'ff@email.com', '123'),
-(4, 'David', 'Smith', '456 Main St', '555-1234', 'david@email.com', 'password456'),
-(5, 'Meaa', 'Sala', 'FOS-OF', '4343434', 'Meaa@email.com', '123'),
-(6, 'Hala', 'jaja', 'LA-342', '234355', 'Hala@email.com', '123');
+INSERT INTO `members` (`MemberID`, `FirstName`, `LastName`, `Address`, `PhoneNumber`, `Email`, `Password`, `access_rights`) VALUES
+(0, 'Admin', 'L1', NULL, NULL, '1@admin.com', '123', 1),
+(1, 'อลิซ', 'จอห์นสัน', '789 ถนนมาร์เก็ต', '555-9876', 'alice@email.com', 'securepass123', 0),
+(2, 'บ็อบ', 'สมิธ', '123 ถนนการ์เด้น', '555-4321', 'bob@email.com', 'pass123', 0),
+(3, 'Apinya', 'Noochuay', '987 LA JDL', '999999', 'ff@email.com', '123', 0),
+(4, 'David', 'Smith', '456 Main St', '555-1234', 'david@email.com', 'password456', 0),
+(5, 'Meaa', 'Sala', 'FOS-OF', '4343434', 'Meaa@email.com', '123', 0),
+(6, 'Hala', 'jaja', 'LA-342', '234355', 'Hala@email.com', '123', 0),
+(7, 'Surasak', 'Panwanakorn', 'ดอยฮาง เชียงราย', '0931840149', 'surasak@email.com', 'la123', 0);
 
 -- --------------------------------------------------------
 
@@ -189,32 +204,20 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`orderNo`, `odStatusID`, `Netprice`, `Email`) VALUES
-(1, 102, 1080, 'ff@email.com'),
-(2, 102, 900, 'bob@email.com'),
-(3, 102, 300, 'bob@email.com'),
-(4, 102, 500, 'ff@email.com'),
-(5, 102, 94, 'ff@email.com'),
-(6, 102, 590, 'ff@email.com'),
-(13, 102, 1300, 'bob@email.com'),
-(14, 102, 995, 'bob@email.com'),
-(15, 102, 1400, 'alice@email.com'),
-(16, 102, 607, 'alice@email.com'),
-(17, 102, 550, 'david@email.com'),
-(18, 102, 600, 'david@email.com'),
-(19, 102, 956, 'david@email.com'),
-(20, 102, 270, 'david@email.com'),
-(21, 102, 515, 'david@email.com'),
-(22, 102, 543, 'david@email.com'),
-(23, 102, 247, 'david@email.com'),
-(24, 102, 330, 'david@email.com'),
-(25, 102, 30, 'david@email.com'),
-(26, 102, 180, 'david@email.com'),
-(27, 102, 47, 'bob@email.com'),
-(28, 102, 137, 'bob@email.com'),
-(29, 102, 752, 'ff@email.com'),
-(30, 102, 282, 'bob@email.com'),
-(31, 102, 270, 'bob@email.com'),
-(32, 102, 94, 'bob@email.com');
+(41, 102, 90, 'Hala@email.com'),
+(42, 103, 375, 'ff@email.com'),
+(43, 102, 375, 'david@email.com'),
+(44, 102, 180, 'david@email.com'),
+(45, 102, 225, 'Hala@email.com'),
+(46, 103, 750, 'Hala@email.com'),
+(47, 103, 450, 'Hala@email.com'),
+(48, 102, 225, 'david@email.com'),
+(49, 103, 160, 'Hala@email.com'),
+(50, 102, 270, 'Hala@email.com'),
+(51, 103, 174, 'david@email.com'),
+(52, 102, 630, 'ff@email.com'),
+(53, 103, 677, 'ff@email.com'),
+(54, 103, 615, 'ff@email.com');
 
 -- --------------------------------------------------------
 
@@ -234,7 +237,7 @@ CREATE TABLE `orderstatus` (
 INSERT INTO `orderstatus` (`odStatusID`, `odStatusName`) VALUES
 (101, 'Already shipped'),
 (102, 'In progress'),
-(103, 'Waiting for order');
+(103, 'Successful delivery');
 
 -- --------------------------------------------------------
 
@@ -258,21 +261,21 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ProductID`, `ProductName`, `Price`, `ImageURL`, `Category`, `AdditionalInfo`, `Quantity`, `score`) VALUES
-(1, ' Tomato', 66.00, 'https://s.isanook.com/he/0/ud/6/32153/tomatoes.jpg?ip/crop/w728h431/q80/webp', 'Vegetable', 'fresh and red', 60, 5),
-(2, 'Apple', 90.00, 'https://ihealzy.com/wp-content/uploads/2021/07/Apple-1.jpg', 'Fruit', 'Sweet and crisp', 32, 4),
+(1, ' Tomato', 66.00, 'https://s.isanook.com/he/0/ud/6/32153/tomatoes.jpg?ip/crop/w728h431/q80/webp', 'Vegetable', 'fresh and red', 58, 5),
+(2, 'Apple', 90.00, 'https://ihealzy.com/wp-content/uploads/2021/07/Apple-1.jpg', 'Fruit', 'Sweet and crisp', 28, 4),
 (3, 'Carrot', 47.00, 'https://veggiesgreen.com/wp-content/uploads/2023/09/%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%99%E0%B8%97%E0%B9%89%E0%B8%AD%E0%B8%87-70-1024x614.png', 'Vegetable', 'Vitamin supplement', 4, 2),
-(4, 'Banana', 30.00, 'https://s.isanook.com/he/0/ud/1/9753/banana.jpg?ip/crop/w728h431/q80/webp', 'Fruit', 'source of energy minerals', 14, 5),
+(4, 'Banana', 30.00, 'https://s.isanook.com/he/0/ud/1/9753/banana.jpg?ip/crop/w728h431/q80/webp', 'Fruit', 'source of energy minerals', 8, 5),
 (5, 'Cabbage', 43.00, 'https://www.smeleader.com/wp-content/uploads/2019/11/%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B3%E0%B8%9B%E0%B8%A5%E0%B8%B5%E0%B8%82%E0%B8%B2%E0%B8%A2-660x330.jpg', 'Vegetable', 'Cabbage is an annual plant that lasts only one season. The trunk is spherical, approximately 25-45 centimeters tall. The trunk bark is white.', 34, 3),
-(6, 'Strawberry', 80.00, 'https://cdn.chiangmainews.co.th/wp-content/uploads/2017/01/07141754/b6.jpg', 'Fruit', 'Mildly sweet and sweet', 67, 4),
+(6, 'Strawberry', 80.00, 'https://cdn.chiangmainews.co.th/wp-content/uploads/2017/01/07141754/b6.jpg', 'Fruit', 'Mildly sweet and sweet', 56, 4),
 (7, 'Water spinach', 55.00, 'https://scontent.fbkk5-6.fna.fbcdn.net/v/t1.6435-9/60812878_415273695978474_6829724941034717184_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeEfwamyoNepVWsVDFyLtek5WU9ipkPLFthZT2KmQ8sW2JBp-134QFgAhbDWMinQjWNwXn3Gur36yY5vyuMHnM1k&_nc_ohc=tvAZGQB0TUUAX9HLtAu&_nc_ht=scontent.fbkk5-6.fna&oh=00_AfCTHoN9uWRFI6SWXekrWdk6llqkIp-E8GNLdwIh3EAd0g&oe=65C1D19B', 'Vegetable', 'Suitable for stir frying or boiling.', 44, 2),
 (8, 'Mangosteen', 120.00, 'https://jirayu.files.wordpress.com/2017/05/mangosteen.jpg', 'Fruit', 'little sweet', 84, 3),
-(9, 'Mango', 45.00, 'https://thai-herbs.thdata.co/mydear_cover/thdata_%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%8704.jpg', 'Fruit', 'Sweet and crisp', 12, 4),
+(9, 'Mango', 45.00, 'https://thai-herbs.thdata.co/mydear_cover/thdata_%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%8704.jpg', 'Fruit', 'Sweet and crisp', 0, 4),
 (10, 'Roselle', 25.00, 'https://hkm.hrdi.or.th//upload/images/Thumbimg/20150811132057.jpg', 'Vegetable', 'Fresh and crisp', 10, 3),
 (11, 'Coconut', 50.00, 'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYRjfmWYB7dSzKh9A6kw3HgOdRzUjVCuiIlYC8W10Hgd2oEkWnLh.jpg', 'Fruit', 'Perfume and sweet', 12, 0),
 (12, 'Apricots', 150.00, 'https://akesisoncology.com/wp-content/uploads/2021/10/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2-_-%E0%B9%84%E0%B8%9F%E0%B9%82%E0%B8%95%E0%B8%99%E0%B8%B4%E0%B8%A7%E0%B9%80%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B8%B3%E0%B8%9A%E0%B8%B1%E0%B8%94-_-%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%9B%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%81%E0%B9%81%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B4%E0%B8%84%E0%B8%AD%E0%B8%97.jpg', 'Fruit', 'sweet and sour', 9, 3),
 (13, 'Pomegranate', 110.00, 'https://f.ptcdn.info/303/038/000/nzcghfirfp3gVCW9XbS-o.jpg', 'Fruit', 'mellow sweet', 17, 0),
 (14, 'Bean sprout', 20.00, 'https://s.isanook.com/wo/0/ud/47/237537/f.jpg?ip/crop/w670h402/q80/jpg', 'Vegetable', 'Light green and crisp', 10, 0),
-(15, 'Lemon', 150.00, 'https://s.isanook.com/he/0/ud/0/2381/istock-91829587.jpg?ip/crop/w670h402/q80/jpg', 'Fruit', 'sour and refreshing', 19, 4),
+(15, 'Lemon', 150.00, 'https://s.isanook.com/he/0/ud/0/2381/istock-91829587.jpg?ip/crop/w670h402/q80/jpg', 'Fruit', 'sour and refreshing', 8, 4),
 (16, 'Chinese Cabbage', 30.00, 'https://morkeaw.net/wp-content/uploads/2021/10/%E0%B8%9C%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%94%E0%B8%82%E0%B8%B2%E0%B8%A7.jpg', 'Vegetable', 'Fresh and crisp', 3, 0),
 (17, 'White Strawberry', 95.00, 'https://demofc018.trustthemes.net/wp-content/uploads/2017/03/seed-4.jpg', 'Fruit', 'Mildly sweet and sweet', 40, 4),
 (18, 'Watermelon', 120.00, 'https://s359.kapook.com/r/600/auto/pagebuilder/79032e42-71c6-47dd-9bd8-67157ed69cfa.jpg', 'Fruit', 'Fragrant and refreshing', 52, 0),
@@ -288,22 +291,22 @@ INSERT INTO `products` (`ProductID`, `ProductName`, `Price`, `ImageURL`, `Catego
 (28, 'Onion', 50.00, 'https://www.technologychaoban.com/wp-content/uploads/2019/01/4-9.jpg', 'Vegetable', 'Rich flavor', 30, 0),
 (29, 'Red Oak Lettuce', 95.00, 'https://mthai.com/app/uploads/2019/08/red-oak-leaf.jpg', 'Vegetable', 'similar to green oak Easy to eat, easy to excrete', 17, 0),
 (30, 'Radish', 32.00, 'https://img.kapook.com/u/2018/sireeporn/1_39.jpg', 'Vegetable', 'Rich flavor', 49, 0),
-(31, 'Longan', 90.00, 'https://image.makewebeasy.net/makeweb/m_1920x0/oFvGx8Urz/ThaiFruit/222.jpg', 'Fruit', 'Sweet and crispy', 35, 0),
-(32, 'Mimosa', 28.00, 'https://s359.kapook.com/pagebuilder/3f590d6d-b62f-4444-a454-b0482a1ad8fd.jpg', 'Vegetable', 'Fresh and crisp', 60, 0),
-(33, 'Orange', 45.00, 'https://assets.brandinside.asia/uploads/2023/05/Orange-scaled.jpeg', 'Fruit', 'sweet and sour', 80, 5),
+(31, 'Longan', 90.00, 'https://image.makewebeasy.net/makeweb/m_1920x0/oFvGx8Urz/ThaiFruit/222.jpg', 'Fruit', 'Sweet and crispy', 32, 0),
+(32, 'Mimosa', 28.00, 'https://s359.kapook.com/pagebuilder/3f590d6d-b62f-4444-a454-b0482a1ad8fd.jpg', 'Vegetable', 'Fresh and crisp', 57, 0),
+(33, 'Orange', 45.00, 'https://assets.brandinside.asia/uploads/2023/05/Orange-scaled.jpeg', 'Fruit', 'sweet and sour', 67, 5),
 (34, 'Zucchini', 38.00, 'https://www.calforlife.com/image/food/Angled-gourd.gif', 'Vegetable', 'Soft and fragrant', 70, 0),
 (35, 'Asparagus', 120.00, 'https://mthai.com/app/uploads/2019/07/asparagus.jpg', 'Vegetable', 'A little sweet and intense.', 40, 0),
 (36, 'Coriander', 20.00, 'https://www.disthai.com/images/content/original-1634632690275.jpg', 'Vegetable', 'Fragrant and refreshing', 90, 0),
-(37, 'Sweet Lemon', 55.00, 'https://moisaner.com/wp-content/uploads/2020/01/naranja-verde.jpg', 'Fruit', 'Mild sweet and sour', 60, 0),
-(38, 'Broccoli Hybrid', 60.00, 'https://puechkaset.com/wp-content/uploads/2016/12/%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B8%9A%E0%B8%A3%E0%B9%87%E0%B8%AD%E0%B8%84%E0%B9%82%E0%B8%84%E0%B8%A5%E0%B8%B5%E0%B9%88.jpg', 'Vegetable', 'Vitamin supplement', 55, 0),
-(39, 'Pomegranate Green', 110.00, 'https://www.technologychaoban.com/wp-content/uploads/2016/08/1466649225.jpg', 'Fruit', 'sour and refreshing', 75, 0),
+(37, 'Sweet Lemon', 55.00, 'https://moisaner.com/wp-content/uploads/2020/01/naranja-verde.jpg', 'Fruit', 'Mild sweet and sour', 57, 0),
+(38, 'Broccoli Hybrid', 60.00, 'https://puechkaset.com/wp-content/uploads/2016/12/%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B8%9A%E0%B8%A3%E0%B9%87%E0%B8%AD%E0%B8%84%E0%B9%82%E0%B8%84%E0%B8%A5%E0%B8%B5%E0%B9%88.jpg', 'Vegetable', 'Vitamin supplement', 52, 0),
+(39, 'Pomegranate Green', 110.00, 'https://www.technologychaoban.com/wp-content/uploads/2016/08/1466649225.jpg', 'Fruit', 'sour and refreshing', 71, 0),
 (40, 'Nam Dok Mai Mango', 85.00, 'https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4vQxbYdm3um57XuIqfaa9TTqjj4ZWq3DKySh1KgbDGtTspJdKYX.jpg', 'Fruit', 'Sweet and crispy', 35, 0),
 (41, 'Cucumber', 28.00, 'https://res.cloudinary.com/dk0z4ums3/image/upload/v1503981767/attached_image_th/%25e0%25b9%2581%25e0%25b8%2595%25e0%25b8%2587%25e0%25b8%2581%25e0%25b8%25a7%25e0%25b8%25b2.jpg', 'Vegetable', 'Little sweet and crispy', 60, 0),
 (42, 'Yellow Eggplant', 40.00, 'https://cdn-cakfh.nitrocdn.com/uCvbbthIGuqozYBVHNiffOSAfPDdhkkl/assets/images/optimized/rev-aaacaf7/kaset.today/wp-content/uploads/2021/01/unnamed-1-2.jpg', 'Vegetable', 'bright colors', 85, 0),
 (43, 'Foreigner', 65.00, 'https://img.kapook.com/u/2020/Tanapol/health/farang/f2.jpg', 'Fruit', 'Sweet and crisp', 45, 3),
 (44, 'Yellow Cherry Tomato Seeds', 32.00, 'https://www.farmorganicseed.com/wp-content/uploads/2018/04/%E0%B9%80%E0%B8%A1%E0%B8%A5%E0%B9%87%E0%B8%94%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B8%B8%E0%B9%8C%E0%B8%A1%E0%B8%B0%E0%B9%80%E0%B8%82%E0%B8%B7%E0%B8%AD%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%871.jpg', 'Vegetable', 'fresh and delicious', 60, 0),
 (45, 'Ripe Papaya', 50.00, 'https://img.kapook.com/u/2018/wanchalerm/Health_01_61/py2.jpg', 'Fruit', 'Perfume and frame', 70, 0),
-(46, 'Shallots', 35.00, 'https://www.aurareefood.com/arwp/wp-content/uploads/2016/10/article4.jpg', 'Vegetable', 'Rich flavor', 80, 0),
+(46, 'Shallots', 35.00, 'https://www.aurareefood.com/arwp/wp-content/uploads/2016/10/article4.jpg', 'Vegetable', 'Rich flavor', 77, 0),
 (47, 'Papaya', 90.00, 'https://www.dailynews.co.th/wp-content/uploads/2022/08/%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3-1-768x433.jpg', 'Fruit', 'Mildly sweet and very crispy.', 54, 1),
 (48, 'Tamarind', 30.00, 'https://s359.kapook.com/r/600/auto/pagebuilder/7723d671-880d-465d-86bb-146950ac3a41.jpg', '', 'Very sweet and sour.', 30, 0);
 
@@ -386,19 +389,19 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `odDID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
+  MODIFY `odDID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=384;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `orderNo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `orderNo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

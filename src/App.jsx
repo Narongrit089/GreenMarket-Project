@@ -10,7 +10,7 @@ import Order from "./components/Order/order";
 import Location from "./components/Location/location";
 import OderHistory from "./components/Order/orderHistory";
 
-import Member from "./components/Admin/memberAM";
+import AdminCenter from "./components/Admin/adminCenter";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -80,7 +80,7 @@ function App() {
           element={<OderHistory username={username} />}
         />
 
-        <Route path="/member" element={<Member username={username} />} />
+        <Route path="/adminC" element={<AdminCenter username={username} />} />
 
         {/* <Route path="/loginP" element={<Login />} /> */}
       </Routes>

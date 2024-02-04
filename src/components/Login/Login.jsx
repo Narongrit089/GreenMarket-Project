@@ -37,21 +37,22 @@ const Login = ({ onLogin, loginError }) => {
       const data = await response.json();
 
       if (response.ok) {
-        const { FirstName, LastName, Email, Password } = data;
+        const { FirstName, LastName, Email, Password, access_rights } = data;
 
         // Assuming successful login, set the user
         onLogin(formData.email);
 
         // Save user data in localStorage for later reference
-        localStorage.setItem("email", Email);
-        localStorage.setItem("password", Password);
+        // localStorage.setItem("email", Email);
+        // localStorage.setItem("password", Password);
+        localStorage.setItem("right", access_rights);
 
         // Display a welcome notification with FirstName and LastName
         toast.success(`Welcome, ${FirstName} ${LastName}!`);
 
         // Check if the user is admin before navigating to the dashboard
-        if (Email === "1@admin.com" && Password === "123") {
-          navigate("/member");
+        if (access_rights === 1) {
+          navigate("/adminC");
         } else {
           // Redirect to the dashboard
           navigate("/sale");
