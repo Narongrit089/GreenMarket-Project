@@ -8,6 +8,7 @@ import Register from "./components/Login/Register"; // Import the Register compo
 import Cart from "./components/Cart/Cart";
 import Order from "./components/Order/order";
 import Location from "./components/Location/location";
+import OderHistory from "./components/Order/orderHistory";
 
 import Member from "./components/Admin/memberAM";
 
@@ -74,6 +75,10 @@ function App() {
         <Route path="/cart" element={<Cart username={username} />} />
         <Route path="/order" element={<Order username={username} />} />
         <Route path="/location" element={<Location key={location.key} />} />
+        <Route
+          path="/order-history"
+          element={<OderHistory username={username} />}
+        />
 
         <Route path="/member" element={<Member username={username} />} />
 
