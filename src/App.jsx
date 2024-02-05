@@ -11,6 +11,8 @@ import Location from "./components/Location/location";
 import OderHistory from "./components/Order/orderHistory";
 
 import AdminCenter from "./components/Admin/adminCenter";
+import ProductList from "./components/Admin/components/ProductList";
+import OrderList from "./components/Admin/components/OrderList";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,7 +58,10 @@ function App() {
             loggedIn ? (
               <Navigate to="/sale" />
             ) : (
-              <Login onLogin={handleLogin} loginError={loginError} />
+              <Login
+                onLogin={(email, username) => handleLogin(email, username)}
+                loginError={loginError}
+              />
             )
           }
         ></Route>
@@ -81,6 +86,9 @@ function App() {
         />
 
         <Route path="/adminC" element={<AdminCenter username={username} />} />
+
+        <Route path="/products" element={<ProductList username={username} />} />
+        <Route path="/orderList" element={<OrderList username={username} />} />
 
         {/* <Route path="/loginP" element={<Login />} /> */}
       </Routes>

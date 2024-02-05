@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 "LastName" => $row["LastName"],
                 "Email" => $row["Email"],
                 "Password" => $row["Password"],
+                "access_rights" => $row["access_rights"],
                 // Add other necessary fields
             );
 

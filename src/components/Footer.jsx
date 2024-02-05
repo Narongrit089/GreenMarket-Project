@@ -4,9 +4,14 @@ import { useLocation } from "react-router-dom";
 const Footer = () => {
   const location = useLocation();
   const isAdminPage = location.pathname === "/adminC";
-  const shouldShowFooter = !isAdminPage;
+  const isProductsPage = location.pathname === "/products";
+  const isOrderListPage = location.pathname === "/orderList";
 
-  if (!shouldShowFooter) {
+  const shouldShowFooter = !isAdminPage;
+  const shouldShowFooterP = !isProductsPage;
+  const shouldShowFooterO = !isOrderListPage;
+
+  if (!shouldShowFooter || !shouldShowFooterP || !shouldShowFooterO) {
     return null; // ไม่แสดง Footer เมื่ออยู่ในหน้า AdminCenter
   }
 

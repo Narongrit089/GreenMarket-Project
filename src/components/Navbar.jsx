@@ -20,6 +20,9 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
   const isOderHistoryPage = location.pathname === "/order-history";
   const isNotAdminPage = !isAdminPage;
 
+  const isProductsPage = location.pathname === "/products";
+  const isOrderListPage = location.pathname === "/orderList";
+
   const handleLogout = () => {
     if (
       !isNotAdminPage ||
@@ -35,18 +38,9 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
     }
   };
 
-  const handleLogout1 = () => {
-    if (isCartPage || isOrderPage || isAdminPage || isLocationPage) {
-      // เพิ่มการตรวจสอบว่าอยู่ในหน้า Location
-      window.location.href = "/login";
-    } else {
-      onLogout();
-    }
-  };
-
   return (
     <>
-      {isNotAdminPage && (
+      {isNotAdminPage && !isProductsPage && !isOrderListPage && (
         <nav className="bg-gradient-to-r from-blue-600 to-green-500 p-5">
           <div className="container mx-auto flex items-center justify-between">
             <Link

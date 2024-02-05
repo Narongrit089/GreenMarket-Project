@@ -42,15 +42,15 @@ switch ($method) {
         // Create a new product
         $data = json_decode(file_get_contents("php://input"), true);
 
-        $productName = $data["productName"];
-        $price = $data["price"];
-        $imageURL = $data["imageURL"];
-        $category = $data["category"];
-        $additionalInfo = $data["additionalInfo"];
-        $quantity = $data["quantity"];
+        $productName = $data["ProductName"];
+        $price = $data["Price"];
+        $imageURL = $data["ImageURL"];
+        $category = $data["Category"];
+        $additionalInfo = $data["AdditionalInfo"];
+        $quantity = $data["Quantity"];
 
         // Insert the new product into the database
-        $sql = "INSERT INTO products (ProductID, ProductName, Price, ImageURL, Category, AdditionalInfo, Quantity) VALUES ('$newProductID', '$productName', $price, '$imageURL', '$category', '$additionalInfo', $quantity)";
+        $sql = "INSERT INTO products (ProductID, ProductName, Price, ImageURL, Category, AdditionalInfo, Quantity, score) VALUES ('$newProductID', '$productName', $price, '$imageURL', '$category', '$additionalInfo', $quantity, 0)";
 
         if ($conn->query($sql) === true) {
             echo json_encode(["message" => "Product added successfully"]);

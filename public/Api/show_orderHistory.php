@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             FROM `order`
             JOIN orderstatus os USING (odStatusID)
             JOIN members mb USING (Email)
-            WHERE `order`.`Email` = '$username' AND `order`.`odStatusID` = 102";
+            WHERE `order`.`Email` = '$username' AND `order`.`odStatusID` = 103";
 
         // Perform the query
         $result = mysqli_query($conn, $sql);

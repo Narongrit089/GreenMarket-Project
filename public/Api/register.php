@@ -17,8 +17,8 @@ $Email = isset($_REQUEST['Email']) ? $_REQUEST['Email'] : '';
 $Password = isset($_REQUEST['Password']) ? $_REQUEST['Password'] : '';
 
 // เขียนคำสั่ง SQL เพื่อเพิ่มข้อมูลลงในตาราง
-$sql = "INSERT INTO `members` (`MemberID`, `FirstName`, `LastName`, `Address`, `PhoneNumber`, `Email`, `Password`)
-        VALUES ('$newMemberID', '$FirstName', '$LastName', '$Address', '$PhoneNumber', '$Email', '$Password')";
+$sql = "INSERT INTO `members` (`MemberID`, `FirstName`, `LastName`, `Address`, `PhoneNumber`, `Email`, `Password`, `access_rights`)
+        VALUES ('$newMemberID', '$FirstName', '$LastName', '$Address', '$PhoneNumber', '$Email', '$Password', 0)";
 
 if (mysqli_query($conn, $sql)) {
     // ส่งรหัสสถานะ 200 (OK)

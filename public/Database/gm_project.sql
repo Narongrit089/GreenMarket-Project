@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2024 at 04:56 PM
+-- Generation Time: Feb 05, 2024 at 08:47 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -42,21 +42,8 @@ CREATE TABLE `carts` (
 INSERT INTO `carts` (`odDID`, `odStatusID`, `ProductID`, `qty`, `Email`) VALUES
 (215, 103, 19, 3, 'alice@email.com'),
 (216, 103, 18, 2, 'alice@email.com'),
-(352, 103, 0, 0, ''),
-(353, 103, 0, 0, ''),
-(354, 103, 0, 0, ''),
-(355, 103, 0, 0, ''),
-(356, 103, 0, 0, ''),
-(357, 103, 0, 0, ''),
-(358, 103, 0, 0, ''),
-(359, 103, 0, 0, ''),
-(360, 103, 0, 0, ''),
-(361, 103, 0, 0, ''),
 (368, 103, 17, 2, 'Hala@email.com'),
-(369, 103, 6, 2, 'david@email.com'),
-(381, 103, 1, 3, 'ff@email.com'),
-(382, 103, 6, 3, 'ff@email.com'),
-(383, 103, 15, 1, 'ff@email.com');
+(369, 103, 6, 2, 'david@email.com');
 
 -- --------------------------------------------------------
 
@@ -204,20 +191,21 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`orderNo`, `odStatusID`, `Netprice`, `Email`) VALUES
-(41, 102, 90, 'Hala@email.com'),
+(41, 103, 90, 'Hala@email.com'),
 (42, 103, 375, 'ff@email.com'),
 (43, 102, 375, 'david@email.com'),
 (44, 102, 180, 'david@email.com'),
 (45, 102, 225, 'Hala@email.com'),
 (46, 103, 750, 'Hala@email.com'),
 (47, 103, 450, 'Hala@email.com'),
-(48, 102, 225, 'david@email.com'),
+(48, 103, 225, 'david@email.com'),
 (49, 103, 160, 'Hala@email.com'),
 (50, 102, 270, 'Hala@email.com'),
 (51, 103, 174, 'david@email.com'),
-(52, 102, 630, 'ff@email.com'),
+(52, 103, 630, 'ff@email.com'),
 (53, 103, 677, 'ff@email.com'),
-(54, 103, 615, 'ff@email.com');
+(54, 103, 615, 'ff@email.com'),
+(55, 102, 588, 'ff@email.com');
 
 -- --------------------------------------------------------
 
@@ -237,7 +225,7 @@ CREATE TABLE `orderstatus` (
 INSERT INTO `orderstatus` (`odStatusID`, `odStatusName`) VALUES
 (101, 'Already shipped'),
 (102, 'In progress'),
-(103, 'Successful delivery');
+(103, 'Currently shipping');
 
 -- --------------------------------------------------------
 
@@ -261,21 +249,21 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ProductID`, `ProductName`, `Price`, `ImageURL`, `Category`, `AdditionalInfo`, `Quantity`, `score`) VALUES
-(1, ' Tomato', 66.00, 'https://s.isanook.com/he/0/ud/6/32153/tomatoes.jpg?ip/crop/w728h431/q80/webp', 'Vegetable', 'fresh and red', 58, 5),
+(1, ' Tomato', 66.00, 'https://s.isanook.com/he/0/ud/6/32153/tomatoes.jpg?ip/crop/w728h431/q80/webp', 'Vegetable', 'fresh and red', 55, 5),
 (2, 'Apple', 90.00, 'https://ihealzy.com/wp-content/uploads/2021/07/Apple-1.jpg', 'Fruit', 'Sweet and crisp', 28, 4),
 (3, 'Carrot', 47.00, 'https://veggiesgreen.com/wp-content/uploads/2023/09/%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%99%E0%B8%97%E0%B9%89%E0%B8%AD%E0%B8%87-70-1024x614.png', 'Vegetable', 'Vitamin supplement', 4, 2),
 (4, 'Banana', 30.00, 'https://s.isanook.com/he/0/ud/1/9753/banana.jpg?ip/crop/w728h431/q80/webp', 'Fruit', 'source of energy minerals', 8, 5),
 (5, 'Cabbage', 43.00, 'https://www.smeleader.com/wp-content/uploads/2019/11/%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%B3%E0%B8%9B%E0%B8%A5%E0%B8%B5%E0%B8%82%E0%B8%B2%E0%B8%A2-660x330.jpg', 'Vegetable', 'Cabbage is an annual plant that lasts only one season. The trunk is spherical, approximately 25-45 centimeters tall. The trunk bark is white.', 34, 3),
-(6, 'Strawberry', 80.00, 'https://cdn.chiangmainews.co.th/wp-content/uploads/2017/01/07141754/b6.jpg', 'Fruit', 'Mildly sweet and sweet', 56, 4),
+(6, 'Strawberry', 80.00, 'https://cdn.chiangmainews.co.th/wp-content/uploads/2017/01/07141754/b6.jpg', 'Fruit', 'Mildly sweet and sweet', 53, 4),
 (7, 'Water spinach', 55.00, 'https://scontent.fbkk5-6.fna.fbcdn.net/v/t1.6435-9/60812878_415273695978474_6829724941034717184_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeEfwamyoNepVWsVDFyLtek5WU9ipkPLFthZT2KmQ8sW2JBp-134QFgAhbDWMinQjWNwXn3Gur36yY5vyuMHnM1k&_nc_ohc=tvAZGQB0TUUAX9HLtAu&_nc_ht=scontent.fbkk5-6.fna&oh=00_AfCTHoN9uWRFI6SWXekrWdk6llqkIp-E8GNLdwIh3EAd0g&oe=65C1D19B', 'Vegetable', 'Suitable for stir frying or boiling.', 44, 2),
-(8, 'Mangosteen', 120.00, 'https://jirayu.files.wordpress.com/2017/05/mangosteen.jpg', 'Fruit', 'little sweet', 84, 3),
+(8, 'Mangosteen', 120.00, '', 'Fruit', '', 85, 3),
 (9, 'Mango', 45.00, 'https://thai-herbs.thdata.co/mydear_cover/thdata_%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%8704.jpg', 'Fruit', 'Sweet and crisp', 0, 4),
 (10, 'Roselle', 25.00, 'https://hkm.hrdi.or.th//upload/images/Thumbimg/20150811132057.jpg', 'Vegetable', 'Fresh and crisp', 10, 3),
 (11, 'Coconut', 50.00, 'https://static.thairath.co.th/media/dFQROr7oWzulq5FZYRjfmWYB7dSzKh9A6kw3HgOdRzUjVCuiIlYC8W10Hgd2oEkWnLh.jpg', 'Fruit', 'Perfume and sweet', 12, 0),
 (12, 'Apricots', 150.00, 'https://akesisoncology.com/wp-content/uploads/2021/10/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A3%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%B2-_-%E0%B9%84%E0%B8%9F%E0%B9%82%E0%B8%95%E0%B8%99%E0%B8%B4%E0%B8%A7%E0%B9%80%E0%B8%97%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B8%B3%E0%B8%9A%E0%B8%B1%E0%B8%94-_-%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%9B%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%81%E0%B9%81%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B4%E0%B8%84%E0%B8%AD%E0%B8%97.jpg', 'Fruit', 'sweet and sour', 9, 3),
 (13, 'Pomegranate', 110.00, 'https://f.ptcdn.info/303/038/000/nzcghfirfp3gVCW9XbS-o.jpg', 'Fruit', 'mellow sweet', 17, 0),
 (14, 'Bean sprout', 20.00, 'https://s.isanook.com/wo/0/ud/47/237537/f.jpg?ip/crop/w670h402/q80/jpg', 'Vegetable', 'Light green and crisp', 10, 0),
-(15, 'Lemon', 150.00, 'https://s.isanook.com/he/0/ud/0/2381/istock-91829587.jpg?ip/crop/w670h402/q80/jpg', 'Fruit', 'sour and refreshing', 8, 4),
+(15, 'Lemon', 150.00, 'https://s.isanook.com/he/0/ud/0/2381/istock-91829587.jpg?ip/crop/w670h402/q80/jpg', 'Fruit', 'sour and refreshing', 7, 4),
 (16, 'Chinese Cabbage', 30.00, 'https://morkeaw.net/wp-content/uploads/2021/10/%E0%B8%9C%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%94%E0%B8%82%E0%B8%B2%E0%B8%A7.jpg', 'Vegetable', 'Fresh and crisp', 3, 0),
 (17, 'White Strawberry', 95.00, 'https://demofc018.trustthemes.net/wp-content/uploads/2017/03/seed-4.jpg', 'Fruit', 'Mildly sweet and sweet', 40, 4),
 (18, 'Watermelon', 120.00, 'https://s359.kapook.com/r/600/auto/pagebuilder/79032e42-71c6-47dd-9bd8-67157ed69cfa.jpg', 'Fruit', 'Fragrant and refreshing', 52, 0),
@@ -401,7 +389,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `orderNo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `orderNo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
